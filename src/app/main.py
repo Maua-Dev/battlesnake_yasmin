@@ -7,7 +7,14 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {
+  "apiversion": "1",
+  "author": "yasbonilha",
+  "color": "#FF5733",
+  "head": "all-seeing",
+  "tail": "do-sammy",
+  "version": "0.0.1-beta"
+}
 
 
 @app.get("/items/{item_id}")
