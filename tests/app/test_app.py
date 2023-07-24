@@ -120,4 +120,162 @@ class Test_App:
         expected_response = ["up", "left", "right", "down"]
         assert type(response) == dict
         assert response['move'] in expected_response
+    
+    def test_move_avoid_wall(self):
+        request = {
+   'game':{
+      'id':'5de0a614-0199-49ab-9a24-8e590ca43091',
+      'ruleset':{
+         'name':'standard',
+         'version':'v1.2.3',
+         'settings':{
+            'foodSpawnChance':15,
+            'minimumFood':1,
+            'hazardDamagePerTurn':0,
+            'hazardMap':'',
+            'hazardMapAuthor':'',
+            'royale':{
+               'shrinkEveryNTurns':0
+            },
+            'squad':{
+               'allowBodyCollisions':False,
+               'sharedElimination':False,
+               'sharedHealth':False,
+               'sharedLength':False
+            }
+         }
+      },
+      'map':'standard',
+      'timeout':500,
+      'source':'custom'
+   },
+   'turn':1,
+   'board':{
+      'height':11,
+      'width':11,
+      'snakes':[
+         {
+            'id':'gs_6BfY4q3wWmj4QrgpfycM4FTQ',
+            'name':'cobrinhadayas',
+            'latency':'31',
+            'health':99,
+            'body':[
+               {
+                  'x':0,
+                  'y':1
+               },
+               {
+                  'x':1,
+                  'y':1
+               },
+               {
+                  'x':1,
+                  'y':1
+               }
+            ],
+            'head':{
+               'x':0,
+               'y':1
+            },
+            'length':3,
+            'shout':'moving left',
+            'squad':'',
+            'customizations':{
+               'color':'#ff5733',
+               'head':'all-seeing',
+               'tail':'do-sammy'
+            }
+         },
+         {
+            'id':'gs_VyYKjWqGDBmVx79RSftS8dfK',
+            'name':'isapizi',
+            'latency':'500',
+            'health':99,
+            'body':[
+               {
+                  'x':9,
+                  'y':10
+               },
+               {
+                  'x':9,
+                  'y':9
+               },
+               {
+                  'x':9,
+                  'y':9
+               }
+            ],
+            'head':{
+               'x':9,
+               'y':10
+            },
+            'length':3,
+            'shout':'',
+            'squad':'',
+            'customizations':{
+               'color':'#9370db',
+               'head':'villain',
+               'tail':'coffee'
+            }
+         }
+      ],
+      'food':[
+         {
+            'x':2,
+            'y':0
+         },
+         {
+            'x':10,
+            'y':8
+         },
+         {
+            'x':5,
+            'y':5
+         },
+         {
+            'x':2,
+            'y':7
+         }
+      ],
+      'hazards':[
+         
+      ]
+   },
+   'you':{
+      'id':'gs_6BfY4q3wWmj4QrgpfycM4FTQ',
+      'name':'cobrinhadayas',
+      'latency':'31',
+      'health':99,
+      'body':[
+         {
+            'x':0,
+            'y':1
+         },
+         {
+            'x':1,
+            'y':1
+         },
+         {
+            'x':1,
+            'y':1
+         }
+      ],
+      'head':{
+         'x':0,
+         'y':1
+      },
+      'length':3,
+      'shout':'moving left',
+      'squad':'',
+      'customizations':{
+         'color':'#ff5733',
+         'head':'all-seeing',
+         'tail':'do-sammy'
+      }
+   }
+}
+        response = move(request)
+        expected_response =directions = ["right", "up", "down"]
+        assert type(response) == dict
+        assert response['move'] in expected_response
         
