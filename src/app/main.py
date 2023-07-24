@@ -24,5 +24,16 @@ def end():
     print("o jogo acabou")
     return "ok"
 
+@app.post("/move")
+def move(request: dict):
+    print("iniciando o movimento!")
+    print(request)
+    response = {
+  "move": "left",
+  "shout": "Moving left!"
+}
+    return response
+
+
 
 handler = Mangum(app, lifespan="off")
