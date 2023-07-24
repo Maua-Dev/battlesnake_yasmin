@@ -1,4 +1,4 @@
-from src.app.main import end, move, read_root, start
+from src.app.main import casas, end, move, read_root, start
 
 
 class Test_App:
@@ -276,6 +276,7 @@ class Test_App:
 }
         response = move(request)
         expected_response =directions = ["right", "up", "down"]
+        casas(request)
         assert type(response) == dict
         assert response['move'] in expected_response
         
