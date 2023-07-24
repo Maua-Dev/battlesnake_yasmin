@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from mangum import Mangum
+from random import choice
 
 app = FastAPI()
 
@@ -28,9 +29,12 @@ def end():
 def move(request: dict):
     print("iniciando o movimento!")
     print(request)
+    directions = ["left", "right", "up", "down"]
+    direction = choice(directions)
+    print("direção é igual:", direction)
     response = {
-  "move": "left",
-  "shout": "Moving left!"
+  "move": direction,
+  "shout": f"moving {direction}"
 }
     return response
 

@@ -25,7 +25,7 @@ class Test_App:
         response = end()
         assert response != "não ok"
     
-    def test_move_left(self):
+    def test_move(self):
         request = {
   "game": {
     "id": "totally-unique-game-id",
@@ -117,11 +117,7 @@ class Test_App:
   }
 }
         response = move(request)
-        expected_response =  {
-  "move": "left",
-  "shout": "Moving left!"
-}
-        assert response == expected_response
-        assert response["move"] == "left"
-        assert response["move"] != "right"
+        expected_response = ["up", "left", "right", "down"]
+        assert type(response) == dict
+        assert response['move'] in expected_response
         
