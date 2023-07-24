@@ -19,5 +19,10 @@ def start():
     print("o jogo começou!")
     return "ok"
 
+@app.post("/end")
+def end():
+    print("o jogo acabou")
+    return "ok"
+
 
 handler = Mangum(app, lifespan="off")
