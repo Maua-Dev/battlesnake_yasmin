@@ -9,8 +9,8 @@ def read_root():
     return {
   "apiversion": "1",
   "author": "yasbonilha",
-  "color": "#FF5733",
-  "head": "all-seeing",
+  "color": "#2874A6",
+  "head": "rudolph",
   "tail": "do-sammy",
   "version": "0.0.1-beta"
 }
@@ -33,12 +33,14 @@ def move(request: dict):
     directions = ["left", "right", "up", "down"]
     if request['board']['snakes'][0]['body'][0]['x'] == 0:
         directions.remove('left')
-    elif request['board']['snakes'][0]['body'][0]['y'] == 0:
-        directions.remove('down')
     elif request['board']['snakes'][0]['body'][0]['x'] == size -1:
         directions.remove('right')
+    if request['board']['snakes'][0]['body'][0]['y'] == 0:
+        directions.remove('down')
     elif request['board']['snakes'][0]['body'][0]['y'] == size -1 :
         directions.remove('up')
+    corpo = desviar_corpo(request)
+    directions.remove(corpo)
     direction = choice(directions)
     print("direção é igual:", direction)
     response = {
@@ -47,10 +49,18 @@ def move(request: dict):
 }
     return response
         
-def casas(request):
+def desviar_corpo(request):
     cabeca = request['board']['snakes'][0]['body'][0]
     meio = request['board']['snakes'][0]['body'][1]
     cauda = request['board']['snakes'][0]['body'][2]
+    if cabeca['x'] - meio['x'] >=1:
+        return 'left'
+    elif cabeca['x'] - meio['x'] <0:
+        return 'right'
+    elif cabeca['y'] - meio['y'] >=1:
+        return 'down'
+    elif cabeca['y'] - meio['y'] <0:
+        return 'up'
 
 
 handler = Mangum(app, lifespan="off")

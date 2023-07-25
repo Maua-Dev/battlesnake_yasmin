@@ -1,4 +1,4 @@
-from src.app.main import casas, end, move, read_root, start
+from src.app.main import desviar_corpo, end, move, read_root, start
 
 
 class Test_App:
@@ -8,8 +8,8 @@ class Test_App:
         assert resp == {
   "apiversion": "1",
   "author": "yasbonilha",
-  "color": "#FF5733",
-  "head": "all-seeing",
+  "color": "#2874A6",
+  "head": "rudolph",
   "tail": "do-sammy",
   "version": "0.0.1-beta"
 }
@@ -275,8 +275,7 @@ class Test_App:
    }
 }
         response = move(request)
-        expected_response =directions = ["right", "up", "down"]
-        casas(request)
+        expected_response =directions = ["up", "down"]
         assert type(response) == dict
         assert response['move'] in expected_response
         
