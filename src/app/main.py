@@ -29,6 +29,17 @@ def end():
 def move(request: dict):
     print("função move ativada")
     print(request)
+    direcoes_possiveis = desviar_corpo(request, desviar_paredes(request))
+    direction = choice(direcoes_possiveis)
+    print("direção é igual:", direction)
+    response = {
+  "move": direction,
+  "shout": f"moving {direction}"
+}
+    return response
+
+
+def desviar_paredes(request: dict):
     size = request['board']['height']
     directions = ["left", "right", "up", "down"]
     if request['board']['snakes'][0]['body'][0]['x'] == 0:
@@ -39,28 +50,31 @@ def move(request: dict):
         directions.remove('down')
     elif request['board']['snakes'][0]['body'][0]['y'] == size -1 :
         directions.remove('up')
-    corpo = desviar_corpo(request)
-    directions.remove(corpo)
-    direction = choice(directions)
-    print("direção é igual:", direction)
-    response = {
-  "move": direction,
-  "shout": f"moving {direction}"
-}
-    return response
-        
-def desviar_corpo(request):
+    return directions
+
+def desviar_corpo(request: dict, directions:dict):
     cabeca = request['board']['snakes'][0]['body'][0]
-    meio = request['board']['snakes'][0]['body'][1]
-    cauda = request['board']['snakes'][0]['body'][2]
-    if cabeca['x'] - meio['x'] >=1:
-        return 'left'
-    elif cabeca['x'] - meio['x'] <0:
-        return 'right'
-    elif cabeca['y'] - meio['y'] >=1:
-        return 'down'
-    elif cabeca['y'] - meio['y'] <0:
-        return 'up'
+    body =  request['board']['snakes'][0]['body']
+    for item in body:
+        if cabeca['x'] - item['x'] ==1 and cabeca['y'] - item['y'] == 0:
+            if 'left' in directions:
+                directions.remove('left')
+        if cabeca['x'] - item['x'] == -1 and cabeca['y'] - item['y'] == 0:
+            if 'right' in directions:
+                directions.remove('right')
+        if cabeca['y'] - item['y'] == -1 and cabeca['x'] - item['x'] == 0:
+            if 'up' in directions:
+                directions.remove('up')
+        if cabeca['y'] - item['y'] == 1 and cabeca['x'] - item['x'] == 0:
+            if 'down' in directions:
+                directions.remove('down')
+    return directions
+        
+
+        
+        
+        
+
 
 
 handler = Mangum(app, lifespan="off")
